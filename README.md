@@ -1,135 +1,153 @@
-\documentclass[12pt]{article}
-\usepackage[a4paper, margin=1in]{geometry}
-\usepackage{titlesec}
-\usepackage{hyperref}
-\usepackage{setspace}
-\usepackage{enumitem}
+Liaplus Assessment Chatbot 
 
-\title{\textbf{ Liaplus Assesment  Chatbot}\\Project Documentation}
-\author{Sagandeep Singh}
-\date{02/12/25}
+Author: Sagandeep Singh
+Date: 02/12/25
 
-\begin{document}
-\maketitle
-\onehalfspacing
+1. Project Overview
 
-\section*{1. Project Overview}
 This project implements an AI-powered Restaurant Feedback Chatbot capable of:
-\begin{itemize}
-    \item Statement-level sentiment analysis
-    \item Conversation-level sentiment summarisation
-    \item Issue/topic classification (Food Quality, Service, Ambience, Pricing, Other)
-    \item Sentiment trend visualisation
-    \item Automatic Excel export of conversation records
-\end{itemize}
 
-The system is modular, production-style, and runs in Google Colab or local Python.
+Statement-level sentiment analysis
 
-\section*{2. How to Run}
+Conversation-level sentiment summarisation
 
+Issue/topic classification (Food Quality, Service, Ambience, Pricing, Other)
 
+Sentiment trend visualisation
 
-\subsection*{Jupyter Notebook}
-\begin{verbatim}
+Automatic Excel export of full conversation logs
+
+The system is modular, scalable, and runnable on Google Colab or local Python/Jupyter Notebook.
+
+2. How to Run
+Jupyter Notebook Setup
+
+Install required libraries:
+
 pip install transformers torch sentencepiece nltk pandas openpyxl matplotlib
-\end{verbatim}
+
+
+Download VADER lexicon (if using fallback):
+
+import nltk
+nltk.download('vader_lexicon')
+
+
 Run the notebook and execute the main chatbot loop.
 
-\section*{3. Chosen Technologies}
-\begin{itemize}
-    \item \textbf{Transformer Model:} nlptown/bert-base-multilingual-uncased-sentiment
-    \item \textbf{Zero-shot Classifier:} facebook/bart-large-mnli
-    \item \textbf{Fallback Sentiment Engine:} NLTK VADER
-    \item \textbf{Data Handling:} pandas DataFrame + Excel export
-    \item \textbf{Plotting:} matplotlib
-    \item \textbf{Architecture:} Python OOP + dataclasses
-\end{itemize}
+3. Chosen Technologies
 
-\section*{4. Explanation of Sentiment Logic}
+Transformer Model: nlptown/bert-base-multilingual-uncased-sentiment
 
-\subsection*{4.1 Transformer-based Sentiment}
-The model outputs a rating from 1 to 5 stars.  
-The mapping is:
-\begin{itemize}
-    \item 4--5 stars = Positive
-    \item 3 stars = Neutral
-    \item 1--2 stars = Negative
-\end{itemize}
+Zero-shot Classifier: facebook/bart-large-mnli
 
-\subsection*{4.2 VADER Fallback Logic}
-Uses compound polarity score:
-\begin{itemize}
-    \item $\geq 0.05$ = Positive
-    \item $\leq -0.05$ = Negative
-    \item otherwise = Neutral
-\end{itemize}
+Fallback Sentiment Engine: NLTK VADER
 
-\section*{5. Topic / Issue Classification Logic}
+Data Handling: pandas DataFrame + Excel export
 
-\subsection*{5.1 Zero-shot Classification}
-The model predicts one of:
-\begin{itemize}
-    \item Food Quality
-    \item Service
-    \item Ambience
-    \item Pricing
-    \item Other
-\end{itemize}
+Plotting: matplotlib
 
-If the confidence is $<0.3$, keyword fallback is triggered.
+Architecture: Python OOP + dataclasses
 
-\subsection*{5.2 Keyword Fallback}
-Simple keyword dictionaries ensure consistent classification when zero-shot scores are low.
+4. Explanation of Sentiment Logic
+4.1 Transformer-based Sentiment
 
-\section*{6. Status of Tier 2 Implementation}
+The transformer outputs ratings from 1–5 stars.
 
-\begin{itemize}
-    \item \textbf{ implemented with timestamps, sentiment, issue, and details.
-    \item \textbf{Trend Plotting:} Implemented using matplotlib.
-    \item \textbf{Excel Export:} Implemented.
-\end{itemize}
+Mapping:
 
-\section*{7. Test Examples}
+4–5 stars → Positive
 
-\subsection*{Example Interaction}
-\begin{description}[leftmargin=2cm]
-    \item[User:] ``Your service disappoints me.''  
-    Sentiment: Negative, Issue: Service
+3 stars → Neutral
 
-    \item[User:] ``Last experience was better.''  
-    Sentiment: Positive, Issue: Service
+1–2 stars → Negative
 
-    \item[User:] ``Food was too cold today.''  
-    Sentiment: Negative, Issue: Food Quality
+4.2 VADER Fallback Logic
 
-    \item[User:] ``Loved the ambience.''  
-    Sentiment: Positive, Issue: Ambience
-\end{description}
+VADER uses compound polarity score:
 
-\subsection*{Overall Output Example}
-\begin{verbatim}
+≥ 0.05 → Positive
+
+≤ -0.05 → Negative
+
+Otherwise → Neutral
+
+5. Topic / Issue Classification Logic
+5.1 Zero-shot Classification
+
+Predicted topics:
+
+Food Quality
+
+Service
+
+Ambience
+
+Pricing
+
+Other
+
+If classifier confidence is below 0.3, the system falls back to keyword rules.
+
+5.2 Keyword Fallback
+
+Uses simple keyword maps to guarantee classification consistency even for unusual messages.
+
+6. Status of Tier 2 Implementation
+
+✔️ Statement-level analysis implemented
+
+Timestamp
+
+Sentiment
+
+Issue
+
+Detailed transformer/VADER raw outputs
+
+✔️ Trend Plotting using matplotlib
+
+✔️ Excel Export implemented
+
+7. Test Examples
+Example Interaction
+
+User: “Your service disappoints me.”
+→ Sentiment: Negative, Issue: Service
+
+User: “Last experience was better.”
+→ Sentiment: Positive, Issue: Service
+
+User: “Food was too cold today.”
+→ Sentiment: Negative, Issue: Food Quality
+
+User: “Loved the ambience.”
+→ Sentiment: Positive, Issue: Ambience
+
+Overall Output Example
 Overall Sentiment: Neutral / Mixed
 Positive: 2
 Negative: 2
 Neutral: 0
-\end{verbatim}
 
-\section*{8. Innovations and Additional Features}
+8. Innovations and Additional Features
 
-\begin{itemize}
-    \item Dual sentiment engine (Transformer + VADER fallback).
-    \item Zero-shot issue detection with keyword fallback for robustness.
-    \item Statement-level + conversation-level dual analysis.
-    \item Trend plotting using encoded sentiment values (-1, 0, +1).
-    \item Automatic Excel export suitable for analytics or ML training.
-    \item Modular OOP design: SentimentEngine, IssueClassifier, ConversationBot, TrendAnalyzer.
-\end{itemize}
+Dual sentiment engine (Transformer + VADER)
 
-\section*{9. Output Files Generated}
-\begin{itemize}
-    \item \textbf{restaurant\_feedback\_realistic.xlsx} (Conversation log)
-    \item Matplotlib trend plot (sentiment timeline)
-\end{itemize}
+Zero-shot classification with fallback for accuracy
 
-\end{document}
+Statement-level + Conversation-level dual analysis
 
+Sentiment trend visualization using encoded values (-1, 0, +1)
+
+Export conversation log to Excel
+
+Highly modular OOP architecture:
+
+SentimentEngine, IssueClassifier, ConversationBot, TrendAnalyzer
+
+9. Output Files Generated
+
+restaurant_feedback_realistic.xlsx — Conversation dataset
+
+Matplotlib sentiment trend plot
