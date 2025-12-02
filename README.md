@@ -130,6 +130,15 @@ Positive: 2
 Negative: 2
 Neutral: 0
 
+<img width="1295" height="282" alt="image" src="https://github.com/user-attachments/assets/4b70c4d5-15d4-43df-a89c-0ef8d10c267b" />
+
+<img width="345" height="67" alt="image" src="https://github.com/user-attachments/assets/dbda8d4e-95f8-4e9b-b016-8b1f06195006" />
+
+<img width="599" height="334" alt="image" src="https://github.com/user-attachments/assets/2783d6a9-1fa2-4fc7-be60-3fef502471f1" />
+
+<img width="1089" height="496" alt="image" src="https://github.com/user-attachments/assets/6d0f8b99-3f75-4a71-b59b-145c36f4e8bb" />
+
+
 8. Innovations and Additional Features
 
 Dual sentiment engine (Transformer + VADER)
